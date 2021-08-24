@@ -10,10 +10,26 @@ const diceEl = document.querySelector('.dice')
 const btnNew = document.querySelector(".btn--new")
 const btnRoll = document.querySelector(".btn--roll")
 const btnHold = document.querySelector(".btn--hold")
+
 let isPlaying = true;
 let score = [0, 0];
 let currentScore = 0;
 let activePlayer = 0;
+
+const begin = function ()
+{
+    score0EL.textContent = 0;
+    score1EL.textContent = 0;
+    current0EL.textContent = 0;
+    current1EL.textContent = 0;
+    diceEl.classList.add('hidden');
+    isPlaying = true;
+    score = [0, 0];
+    currentScore = 0;
+    activePlayer = 0;
+}
+
+begin();
 
 const changePlayer = function ()
 {
@@ -25,16 +41,13 @@ const changePlayer = function ()
     player1EL.classList.toggle('player--active');
 }
 
-score0EL.textContent = 0;
-score1EL.textContent = 0;
-diceEl.classList.add('hidden');
+
 
 btnRoll.addEventListener('click', function ()
 {
     if (isPlaying === true)
     {
         const dice = Math.trunc(Math.random() * 6) + 1;
-        console.log(dice);
 
         diceEl.classList.remove('hidden');
         diceEl.src = `dice-${ dice }.png`
@@ -58,7 +71,7 @@ btnHold.addEventListener('click', function ()
         score[activePlayer] += currentScore;
         document.getElementById(`score--${ activePlayer }`).textContent = score[activePlayer];
 
-        if (score[activePlayer] >= 10)
+        if (score[activePlayer] >= 100)
         {
             isPlaying = false;
             document.querySelector(`.player--${ activePlayer }`).classList.add('player--winner');
@@ -79,16 +92,6 @@ btnNew.addEventListener('click', function ()
     document.querySelector(`.player--${ activePlayer }`).classList.remove('player--winner');
     player0EL.classList.add('player--active');
     player1EL.classList.remove('player--active');
-
-    isPlaying = true;
-    score = [0, 0];
-    currentScore = 0;
-    activePlayer = 0;
-
-    score0EL.textContent = 0;
-    score1EL.textContent = 0;
-    current0EL.textContent = 0;
-    current1EL.textContent = 0;
-    diceEl.classList.add('hidden');
-
+    
+    begin();
 })
